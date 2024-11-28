@@ -67,31 +67,31 @@ function App() {
                 <img
                   src={mostAngry}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={showDialogueBox}
                 />
                 <img
                   src={lessAngry}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={showDialogueBox}
                 />
                 <img
                   src={normal}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={hideDialogue}
                 />
                 <img
                   src={lessHappy}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={hideDialogue}
                 />
                 <img
                   src={mostHappy}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={hideDialogue}
                 />
               </div>
@@ -106,31 +106,31 @@ function App() {
                 <img
                   src={mostAngry}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={showDialogueBox}
                 />
                 <img
                   src={lessAngry}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={showDialogueBox}
                 />
                 <img
                   src={normal}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={hideDialogue}
                 />
                 <img
                   src={lessHappy}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={hideDialogue}
                 />
                 <img
                   src={mostHappy}
                   alt="Sad Emoji 1"
-                  className="w-20 cursor-pointer hover:scale-110 transition"
+                  className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition"
                   onClick={hideDialogue}
                 />
               </div>
@@ -149,27 +149,27 @@ function App() {
               <img
                 src={Star}
                 alt="Sad Emoji 1"
-                className="w-20 cursor-pointer hover:scale-110 transition duration-150"
+                className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition duration-150"
               />
               <img
                 src={Star}
                 alt="Sad Emoji 1"
-                className="w-20 cursor-pointer hover:scale-110 transition duration-150"
+                className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition duration-150"
               />
               <img
                 src={Star}
                 alt="Sad Emoji 1"
-                className="w-20 cursor-pointer hover:scale-110 transition duration-150"
+                className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition duration-150"
               />
               <img
                 src={Star}
                 alt="Sad Emoji 1"
-                className="w-20 cursor-pointer hover:scale-110 transition duration-150"
+                className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition duration-150"
               />
               <img
                 src={Star}
                 alt="Sad Emoji 1"
-                className="w-20 cursor-pointer hover:scale-110 transition duration-150"
+                className="w-14 sm:w-20 cursor-pointer hover:scale-110 transition duration-150"
               />
             </div>
           </div>
