@@ -12,7 +12,7 @@ import TextArea from "./components/TextArea";
 function App() {
   let namee = "mayank";
   const [clientArray, setClientArray] = useState(null);
-  const [feedbackDialogue, setFeedbackDialogue] = useState(false);
+  // const [feedbackDialogue, setFeedbackDialogue] = useState(false);
 
   function showDialogueBox() {
     setFeedbackDialogue(true);
@@ -139,7 +139,7 @@ function App() {
 
           {/* Dialogue box for bad feedback */}
 
-          {feedbackDialogue ? <TextArea/> : ""}
+          <TextArea/>
 
           {/* overall rating */}
           <div className="grid gap-6">
