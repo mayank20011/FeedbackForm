@@ -47,14 +47,14 @@ function App() {
         <form className="grid gap-6 align-center justify-center">
           {/* heading */}
           <div className="border-slate-200 border-b-2 pb-6 w-full">
-            <h1 className="text-5xl sm:text-center font-bold">
+            <h1 className="text-5xl text-center font-bold">
               Hii <span className="text-green-600 capitalize">{namee}!!! </span>
             </h1>
           </div>
 
           {/* Feedback Div */}
           <div className="grid gap-6">
-            <h1 className="text-2xl text-left font-bold text-slate-600">
+            <h1 className="text-2xl text-center font-bold text-slate-600">
               Help Us Improve With Your Valuable Feedback
             </h1>
 
