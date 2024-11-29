@@ -8,11 +8,13 @@ import lessAngry from "./assets/ORANGE 4.png";
 import Logo from "./assets/vfLogo.png";
 import Star from "./assets/Starimages.png";
 import TextArea from "./components/TextArea";
+import { useLocation } from "react-router-dom";
 
 function App() {
-  let namee = "mayank";
+  const location = useLocation();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [clientArray, setClientArray] = useState(null);
-  // const [feedbackDialogue, setFeedbackDialogue] = useState(false);
 
   function showDialogueBox() {
     setFeedbackDialogue(true);
@@ -21,34 +23,42 @@ function App() {
     setFeedbackDialogue(false);
   }
 
+// To Get Data From URL
   useEffect(() => {
-    axios
-      .get("")
-      .then((response) => {
-        console.log(response.data);
-        setClientArray(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    const params = new URLSearchParams(location.search);
+    const name = params.get("name");
+    const phone = params.get("phone");
+    setName(name || "");
+    setPhone(phone || "");
+  }, [location.search]);
+
+  // To Send Data to Db
+  // useEffect(() => {
+  //   axios
+  //     .get("")
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setClientArray(response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     // container for background
     <div className="bg-slate-100 w-100 min-h-screen flex items-center justify-center py-0 sm:py-4">
-      
       {/* Div to hold logo and form */}
       <div className="mx-0 sm:mx-3 w-full px-5 border-2 md:w-3/4 lg:w-1/2 py-12 pt-6 bg-white rounded-sm space-y-6">
-        
         {/* Logo Div */}
-        <img src={Logo} alt="Logo" className="w-48 mx-auto"/>
+        <img src={Logo} alt="Logo" className="w-48 mx-auto" />
 
         {/* Form Div */}
         <form className="grid gap-6 align-center justify-center">
           {/* heading */}
           <div className="border-slate-200 border-b-2 pb-6 w-full">
             <h1 className="text-5xl text-center font-bold">
-              Hii <span className="text-green-600 capitalize">{namee}!!! </span>
+              Hii <span className="text-green-600 capitalize">{name}!!! </span>
             </h1>
           </div>
 
@@ -139,7 +149,7 @@ function App() {
 
           {/* Dialogue box for bad feedback */}
 
-          <TextArea/>
+          <TextArea />
 
           {/* overall rating */}
           <div className="grid gap-6">
