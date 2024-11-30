@@ -1,23 +1,9 @@
 import React from "react";
 import Star from "./assets/Starimages.png";
-import { useRef, useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useRef } from "react";
 
 
-function Feedback() {
-
-  const location = useLocation();
-  const [name, setName] = useState("");
-  const [number, setPhone] = useState("");
-
-  useEffect(()=>{
-    const params = new URLSearchParams(location.search);
-    const name = params.get("name");
-    const number = params.get("phone");
-    setName(name || "");
-    setPhone(number || "");
-  },[location.search]);
-
+function Feedback({name, number}) {
 
   // Array of refrence for stars
   const starRefs = useRef([]);
