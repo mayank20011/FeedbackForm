@@ -20,11 +20,16 @@ function App(){
   },[location.search]);
 
   return (<>
-   <Routes>
-   <Route path="/" element={<Start/>}/>
-   <Route path="/Feedback" element={<Feedback name={name} number={number}/>}/>
-   <Route path="/Confirmation" element={<Confirmation/>}/>
-   </Routes>
+   <Feedback name={name} number={number}/>
   </>)
 }
 export default App;
+
+
+
+
+{/* <Routes>
+   <Route path="/" element={<Start/>}/>
+   <Route path="/Feedback" element={<Feedback name={name} number={number}/>}/>
+   <Route path="/Confirmation" element={<Confirmation/>}/>
+   </Routes> */}
