@@ -46,9 +46,10 @@ function Feedback({ name, number }) {
       data: [
         {
           Name: `${name}`,
-          "Phone Number": `${number}`,
+          "Phone Number": `+${number}`,
           Rating: `${noOfStars}`,
           Comment: `${textarea.current.value}`,
+          "Link Shared?":true
         },
       ],
     };
