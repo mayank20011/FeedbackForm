@@ -5,7 +5,7 @@ import Confirmation from "./Confirmation.jsx";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+import styles from "./toastContainer.module.css";
 function Feedback({ name, number }) {
   const toastCss = {
     position: "top-center",
@@ -96,7 +96,8 @@ function Feedback({ name, number }) {
         pauseOnHover
         theme="light"
         transition={Bounce}
-        style={{marginTop:"20px", width:"95%", marginLeft:"10px", marginRight:"10px"}}/>
+        className={styles.toastContainer}
+        />
       {renderComponent == "Confirmation" ? (
         <Confirmation />
       ) : (

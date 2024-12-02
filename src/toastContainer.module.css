@@ -1,0 +1,10 @@
+@media(max-width:500px)
+{
+  .toastContainer
+  {
+    margin-top: 20px;
+    margin-left:10px;
+    margin-right:10px;
+    width:95%;
+  }
+}
