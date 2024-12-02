@@ -30,13 +30,13 @@ function Feedback({ name, number }) {
   const textarea = useRef(null);
 
   // to catch no of stars
-  let noOfStars = 0;
+  let noOfStars = useRef(0);
 
   // function to run on buttonClick
   function buttonClick(e) {
     console.log("Button Clicked");
-     setPending(true);
-     handleSubmit(e);
+    setPending(true);
+    handleSubmit(e);
   }
   // function to handleSubmit
   function handleSubmit(e) {
@@ -56,29 +56,31 @@ function Feedback({ name, number }) {
     if (noOfStars == 0) {
       toast.error("Rate Us Before Submitting the Form", toastCss);
     } else {
-      axios
-        .post(
-          "https://sheetdb.io/api/v1/fmf04eysjdizg",
-          JSON.stringify(customerFeedBack),
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          setPending(false);
-          if (res.status >= 200 && res.status < 300) {
-            setComponent("Confirmation");
-          } else {
-            toast.error("Something Went Wrong, Try Again", toastCss);
-          }
-        })
-        .catch((err) => {
-          console.log(err.response);
-          toast.error("Server Problem, try again", toastCss);
-        });
+      if (!pending) {
+        axios
+          .post(
+            "https://sheetdb.io/api/v1/fmf04eysjdizg",
+            JSON.stringify(customerFeedBack),
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            setPending(false);
+            if (res.status >= 200 && res.status < 300) {
+              setComponent("Confirmation");
+            } else {
+              toast.error("Something Went Wrong, Try Again", toastCss);
+            }
+          })
+          .catch((err) => {
+            console.log(err.response);
+            toast.error("Server Problem, try again", toastCss);
+          });
+      }
     }
   }
 
