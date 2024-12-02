@@ -163,7 +163,7 @@ function Feedback({ name, number }) {
           {/* For Rating */}
           <div className="grid gap-2">
             <h1 className="text-2xl font-bold">Rate Your Experience</h1>
-            <div className="flex gap-1">
+            <div className="flex gap-3">
               {starRefs.current.map((ref, index) => (
                 <img
                   key={index}
