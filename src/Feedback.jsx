@@ -6,6 +6,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import styles from "./toastContainer.module.css";
+
 function Feedback({ name, number }) {
   const toastCss = {
     position: "top-center",
@@ -32,29 +33,41 @@ function Feedback({ name, number }) {
   function handleSubmit(e) {
     e.preventDefault();
     const customerFeedBack = {
-      name: name,
-      number: number,
-      rating: noOfStars,
-      feedBack: textarea.current.value,
+      data: [
+        {
+          Name: name,
+          "Phone Number": number,
+          Rating: noOfStars,
+          Comment: textarea.current.value,
+        },
+      ],
     };
     if (noOfStars == 0) {
       toast.warning("Rate Us Before Submitting the Form", toastCss);
     } else {
-      console.log(customerFeedBack);
       axios
-        .post("")
+        .post(
+          "https://docs.google.com/spreadsheets/d/1VhywIWk2IohjLLXNDry-87cP_5NvFXLaiLOMZ3IKoGs/edit#gid=0",
+          customerFeedBack,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((res) => {
+          console.log(res);
           if (res.data.success) {
             toast.success("Response Saved SuccessFully", toastCss);
             setComponent("Confirmation");
-          }
-          else
-          {
-            toast.error("Something Went Wrong, Try Again",toastCss)
+          } else {
+            toast.error("Something Went Wrong, Try Again", toastCss);
           }
         })
-        .catch(() => {
-          toast.error("Server Problem, try again",toastCss);
+        .catch((err) => {
+          console.log(err);
+          toast.error("Server Problem, try again", toastCss);
         });
     }
   }
@@ -97,7 +110,7 @@ function Feedback({ name, number }) {
         theme="light"
         transition={Bounce}
         className={styles.toastContainer}
-        />
+      />
       {renderComponent == "Confirmation" ? (
         <Confirmation />
       ) : (
