@@ -1,6 +1,6 @@
 import React from "react";
 import Star from "./assets/Starimages.png";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import Confirmation from "./Confirmation.jsx";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +8,7 @@ import axios from "axios";
 import styles from "./toastContainer.module.css";
 
 function Feedback({ name, number }) {
+  console.log("Component Rendered");
   const toastCss = {
     position: "top-center",
     autoClose: 5000,
@@ -22,13 +23,21 @@ function Feedback({ name, number }) {
 
   // To store what component to render
   const [renderComponent, setComponent] = useState("Form");
+  // To store if the request is going or not
 
+  const [pending, setPending] = useState(false);
   // to get input from textarea
   const textarea = useRef(null);
 
   // to catch no of stars
   let noOfStars = 0;
 
+  // function to run on buttonClick
+  function buttonClick(e) {
+    console.log("Button Clicked");
+     setPending(true);
+     handleSubmit(e);
+  }
   // function to handleSubmit
   function handleSubmit(e) {
     e.preventDefault();
@@ -45,7 +54,7 @@ function Feedback({ name, number }) {
     };
 
     if (noOfStars == 0) {
-      toast.warning("Rate Us Before Submitting the Form", toastCss);
+      toast.error("Rate Us Before Submitting the Form", toastCss);
     } else {
       axios
         .post(
@@ -59,9 +68,8 @@ function Feedback({ name, number }) {
           }
         )
         .then((res) => {
-          console.log(res);
-          if (res.status>=200 && res.status<300) {
-            toast.success("Response Saved SuccessFully", toastCss);
+          setPending(false);
+          if (res.status >= 200 && res.status < 300) {
             setComponent("Confirmation");
           } else {
             toast.error("Something Went Wrong, Try Again", toastCss);
@@ -71,26 +79,6 @@ function Feedback({ name, number }) {
           console.log(err.response);
           toast.error("Server Problem, try again", toastCss);
         });
-
-      // fetch("https://sheetdb.io/api/v1/fmf04eysjdizg", {
-      //   method: "POST",
-      //   headers: {
-      //     Accept: "application/json",
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     data: [
-      //       {
-      //         Name: `${name}`,
-      //         "Phone Number": `${number}`,
-      //         Rating: `${noOfStars}`,
-      //         Comment: `${textarea.current.value}`,
-      //       },
-      //     ],
-      //   }),
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => console.log(data));
     }
   }
 
@@ -204,10 +192,20 @@ function Feedback({ name, number }) {
           {/* Button */}
           <button
             type="submit"
-            className="text-white font-normal w-full bg-green-600 rounded-md py-3 px-2 hover:scale-95 transition flex items-center justify-center gap-2 text-xl"
+            className="text-white font-normal w-full bg-green-600 rounded-md py-3 px-2 hover:scale-95 transition text-xl"
+            onClick={buttonClick}
           >
-            <i className="fa-regular fa-paper-plane"></i>
-            <p>Submit Feedback</p>
+            {pending ? (
+              <div className="flex items-center justify-center gap-2">
+                <i className="animate-spin fa-solid fa-circle-notch"></i>
+                <p>Processing ...</p>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-2">
+                <i className="fa-regular fa-paper-plane"></i>
+                <p>Submit Feedback</p>
+              </div>
+            )}
           </button>
         </form>
       )}
