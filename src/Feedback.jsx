@@ -32,23 +32,25 @@ function Feedback({ name, number }) {
   // function to handleSubmit
   function handleSubmit(e) {
     e.preventDefault();
+
     const customerFeedBack = {
       data: [
         {
-          Name: name,
-          "Phone Number": number,
-          Rating: noOfStars,
-          Comment: textarea.current.value,
+          Name: `${name}`,
+          "Phone Number": `${number}`,
+          Rating: `${noOfStars}`,
+          Comment: `${textarea.current.value}`,
         },
       ],
     };
+
     if (noOfStars == 0) {
       toast.warning("Rate Us Before Submitting the Form", toastCss);
     } else {
       axios
         .post(
-          "https://docs.google.com/spreadsheets/d/1VhywIWk2IohjLLXNDry-87cP_5NvFXLaiLOMZ3IKoGs/edit#gid=0",
-          customerFeedBack,
+          "https://sheetdb.io/api/v1/fmf04eysjdizg",
+          JSON.stringify(customerFeedBack),
           {
             headers: {
               Accept: "application/json",
@@ -58,7 +60,7 @@ function Feedback({ name, number }) {
         )
         .then((res) => {
           console.log(res);
-          if (res.data.success) {
+          if (res.status>=200 && res.status<300) {
             toast.success("Response Saved SuccessFully", toastCss);
             setComponent("Confirmation");
           } else {
@@ -66,9 +68,29 @@ function Feedback({ name, number }) {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.response);
           toast.error("Server Problem, try again", toastCss);
         });
+
+      // fetch("https://sheetdb.io/api/v1/fmf04eysjdizg", {
+      //   method: "POST",
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     data: [
+      //       {
+      //         Name: `${name}`,
+      //         "Phone Number": `${number}`,
+      //         Rating: `${noOfStars}`,
+      //         Comment: `${textarea.current.value}`,
+      //       },
+      //     ],
+      //   }),
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => console.log(data));
     }
   }
 
