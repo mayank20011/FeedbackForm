@@ -4,11 +4,13 @@ import { useRef, useEffect, useState } from "react";
 import Confirmation from "./Confirmation.jsx";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+
 function Feedback({ name, number }) {
-  const errorToastCss = {
+  const toastCss = {
     position: "top-center",
     autoClose: 5000,
-    hideProgressBar: true,
+    hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
@@ -36,20 +38,24 @@ function Feedback({ name, number }) {
       feedBack: textarea.current.value,
     };
     if (noOfStars == 0) {
-      // toast.error("Rate Us Before Submitting the Form",errorToastCss);
-      toast.warning("Rate Us Before Submitting the Form", errorToastCss);
+      toast.warning("Rate Us Before Submitting the Form", toastCss);
     } else {
       console.log(customerFeedBack);
-      setComponent("Confirmation");
-      // axios.post("")
-      // .then(()=>
-      //   {
-
-      //   })
-      //   .catch(()=>
-      //   {
-
-      //   });
+      axios
+        .post("")
+        .then((res) => {
+          if (res.data.success) {
+            toast.success("Response Saved SuccessFully", toastCss);
+            setComponent("Confirmation");
+          }
+          else
+          {
+            toast.error("Something Went Wrong, Try Again",toastCss)
+          }
+        })
+        .catch(() => {
+          toast.error("Server Problem, try again",toastCss);
+        });
     }
   }
 
@@ -90,7 +96,7 @@ function Feedback({ name, number }) {
         pauseOnHover
         theme="light"
         transition={Bounce}
-      />
+        style={{marginTop:"20px", width:"95%", marginLeft:"10px", marginRight:"10px"}}/>
       {renderComponent == "Confirmation" ? (
         <Confirmation />
       ) : (
