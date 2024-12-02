@@ -1,23 +1,26 @@
 import Feedback from "./Feedback";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App(){
-  
+function App() {
   const location = useLocation();
   const [name, setName] = useState("");
   const [number, setPhone] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     const params = new URLSearchParams(location.search);
     const name = params.get("name");
     const number = params.get("phone");
     setName(name || "");
     setPhone(number || "");
-  },[location.search]);
+  }, [location.search]);
 
-  return (<>
-   <Feedback name={name} number={number}/>
-  </>)
+  return (
+    <>
+      <Feedback name={name} number={number} />
+    </>
+  );
 }
 export default App;

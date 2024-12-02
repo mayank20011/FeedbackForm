@@ -2,7 +2,20 @@ import React from "react";
 import Star from "./assets/Starimages.png";
 import { useRef, useEffect, useState } from "react";
 import Confirmation from "./Confirmation.jsx";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Feedback({ name, number }) {
+  const errorToastCss = {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+  };
 
   // To store what component to render
   const [renderComponent, setComponent] = useState("Form");
@@ -23,7 +36,8 @@ function Feedback({ name, number }) {
       feedBack: textarea.current.value,
     };
     if (noOfStars == 0) {
-      alert("Fill In the Form");
+      // toast.error("Rate Us Before Submitting the Form",errorToastCss);
+      toast.warning("Rate Us Before Submitting the Form", errorToastCss);
     } else {
       console.log(customerFeedBack);
       setComponent("Confirmation");
@@ -64,82 +78,99 @@ function Feedback({ name, number }) {
   }
   return (
     <div>
-      { renderComponent =="Confirmation" ? <Confirmation/> : <form
-        className="flex flex-col min-h-screen gap-6 px-3 py-3 mx-auto"
-        style={{ maxWidth: "500px" }}
-        onSubmit={handleSubmit}
-      >
-        {/* For Heading */}
-        <h1 className="text-center text-4xl py-4 font-bold text-green-600">
-          Feedback Form
-        </h1>
-
-        {/* changes in name and phone number */}
-        <div className="grid gap-6">
-          {/* name div */}
-          <div className="border-2 border-black p-4 rounded-md flex items-center gap-3 relative">
-            <div
-              className="flex gap-3 items-center absolute bg-white text-green-600"
-              style={{ top: "-30%" }}
-            >
-              <i className="fa-solid fa-user"></i>
-              Customer Name
-            </div>
-            <p>{name}</p>
-          </div>
-          {/*  phone no div */}
-          <div className="border-2 border-black p-4 rounded-md flex items-center gap-3 relative">
-            <div
-              className="flex gap-3 items-center absolute bg-white text-green-600"
-              style={{ top: "-30%" }}
-            >
-              <i className="fa-solid fa-phone"></i>
-              Phone Number
-            </div>
-            <p>{`+${number}`}</p>
-          </div>
-        </div>
-
-        {/* For Rating */}
-        <div className="grid gap-2">
-          <h1 className="text-2xl font-bold">Rate Your Experience</h1>
-          <div className="flex gap-1">
-            {starRefs.current.map((ref, index) => (
-              <img
-                key={index}
-                src={Star}
-                alt="Star Image"
-                className="h-12 grayscale hover:scale-150 transition cursor-pointer"
-                ref={ref}
-                onClick={() => colorStars(index)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Product Feedback */}
-        <div className="grow flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">Product Feedback</h1>
-          <textarea
-            name="Feedback"
-            id="Feedback"
-            placeholder="Share Your thoughts and experiences about the product... "
-            className="w-full h-48 outline-none border-2 p-2 resize-none rounded-md"
-            ref={textarea}
-          ></textarea>
-        </div>
-
-        {/* Button */}
-        <button
-          type="submit"
-          className="text-white font-normal w-full bg-green-600 rounded-md py-3 px-2 hover:scale-95 transition flex items-center justify-center gap-2 text-xl"
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
+      {renderComponent == "Confirmation" ? (
+        <Confirmation />
+      ) : (
+        <form
+          className="flex flex-col min-h-screen gap-6 px-3 py-3 mx-auto"
+          style={{ maxWidth: "500px" }}
+          onSubmit={handleSubmit}
         >
-          <i className="fa-regular fa-paper-plane"></i>
-          <p>Submit Feedback</p>
-        </button>
-      </form>}
+          {/* For Heading */}
+          <h1 className="text-center text-4xl py-4 font-bold text-green-600">
+            Feedback Form
+          </h1>
+
+          {/* changes in name and phone number */}
+          <div className="grid gap-6">
+            {/* name div */}
+            <div className="border-2 border-black p-4 rounded-md flex items-center gap-3 relative">
+              <div
+                className="flex gap-3 items-center absolute bg-white text-green-600"
+                style={{ top: "-30%" }}
+              >
+                <i className="fa-solid fa-user"></i>
+                Customer Name
+              </div>
+              <p>{name}</p>
+            </div>
+            {/*  phone no div */}
+            <div className="border-2 border-black p-4 rounded-md flex items-center gap-3 relative">
+              <div
+                className="flex gap-3 items-center absolute bg-white text-green-600"
+                style={{ top: "-30%" }}
+              >
+                <i className="fa-solid fa-phone"></i>
+                Phone Number
+              </div>
+              <p>{`+${number}`}</p>
+            </div>
+          </div>
+
+          {/* For Rating */}
+          <div className="grid gap-2">
+            <h1 className="text-2xl font-bold">Rate Your Experience</h1>
+            <div className="flex gap-1">
+              {starRefs.current.map((ref, index) => (
+                <img
+                  key={index}
+                  src={Star}
+                  alt="Star Image"
+                  className="h-12 grayscale hover:scale-150 transition cursor-pointer"
+                  ref={ref}
+                  onClick={() => colorStars(index)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Product Feedback */}
+          <div className="grow flex flex-col gap-2">
+            <h1 className="text-2xl font-bold">Product Feedback</h1>
+            <textarea
+              name="Feedback"
+              id="Feedback"
+              placeholder="Share Your thoughts and experiences about the product... "
+              className="w-full h-48 outline-none border-2 p-2 resize-none rounded-md"
+              ref={textarea}
+            ></textarea>
+          </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            className="text-white font-normal w-full bg-green-600 rounded-md py-3 px-2 hover:scale-95 transition flex items-center justify-center gap-2 text-xl"
+          >
+            <i className="fa-regular fa-paper-plane"></i>
+            <p>Submit Feedback</p>
+          </button>
+        </form>
+      )}
     </div>
-  )
+  );
 }
 
 export default Feedback;
