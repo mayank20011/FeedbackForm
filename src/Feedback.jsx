@@ -8,7 +8,6 @@ import axios from "axios";
 import styles from "./toastContainer.module.css";
 
 function Feedback({ name, number }) {
-  console.log("Component Rendered");
   const toastCss = {
     position: "top-center",
     autoClose: 5000,
@@ -35,43 +34,36 @@ function Feedback({ name, number }) {
   // function to run on buttonClick
   function buttonClick(e) {
     console.log("Button Clicked");
-    setPending(true);
+    if (noOfStars.current > 0) {
+      setPending(true);
+    }
     handleSubmit(e);
   }
+  //  Url to send patch request
+  const baseURL = `http://localhost:5000/feedback/?name=${encodeURIComponent(
+    name
+  )}&phone=${encodeURIComponent(number)}`;
+
   // function to handleSubmit
   function handleSubmit(e) {
     e.preventDefault();
-
+    console.log(`Function run, ${noOfStars.current}`);
     const customerFeedBack = {
-      data: [
-        {
-          Name: `${name}`,
-          "Phone Number": `+${number}`,
-          Rating: `${noOfStars}`,
-          Comment: `${textarea.current.value}`,
-          "Link Shared?":true
-        },
-      ],
+      name: `${name}`,
+      phoneNumber: `${number}`,
+      rating: `${noOfStars.current}`,
+      comment: `${textarea.current.value}`,
     };
 
-    if (noOfStars == 0) {
+    if (noOfStars.current === 0) {
       toast.error("Rate Us Before Submitting the Form", toastCss);
     } else {
       if (!pending) {
         axios
-          .post(
-            "https://sheetdb.io/api/v1/fmf04eysjdizg",
-            JSON.stringify(customerFeedBack),
-            {
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-            }
-          )
-          .then((res) => {
+          .patch(baseURL, customerFeedBack)
+          .then((response) => {
             setPending(false);
-            if (res.status >= 200 && res.status < 300) {
+            if (response.data.modified) {
               setComponent("Confirmation");
             } else {
               toast.error("Something Went Wrong, Try Again", toastCss);
@@ -97,7 +89,7 @@ function Feedback({ name, number }) {
 
   // For Star Colors
   function colorStars(index) {
-    noOfStars = index + 1;
+    noOfStars.current = index + 1;
     starRefs.current.forEach((ref, i) => {
       if (i <= index) {
         ref.current.classList.remove("grayscale");

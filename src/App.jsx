@@ -6,7 +6,6 @@ import ExpireLink from "./ExpireLink";
 import axios from "axios";
 
 function App() {
-
   // to get name and no from the url
   const location = useLocation();
 
@@ -18,7 +17,7 @@ function App() {
   const [submit, setSubmit] = useState(false);
 
   //  for Loading
-  const [loading, setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -26,21 +25,24 @@ function App() {
     const number = params.get("phone");
     setName(name || "");
     setPhone(number || "");
+    const baseURL = `http://localhost:5000/feedback/?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(number)}`;
+
     axios
-      .get("https://sheetdb.io/api/v1/fmf04eysjdizg")
+      .get(baseURL)
       .then((response) => {
         setLoading(false);
-        if (response.status >= 200 && response.status < 300) {
-          let row = {};
-          for (let i = 0; i < response.data.length; i++) {
-            row = response.data[i];
-            if (row["Phone Number"] == number) {
-              if (row["Link Shared?"]=="") {
-                setSubmit(true);
-              }
-              break;
-            }
+        if (response.data.sentByUs) {
+          if(response.data.rated){
+            setSubmit(true);
           }
+          else{
+            setSubmit(false);
+          }
+        }
+        else
+        {
+          // Here i can create a new page to show if the person tries to be oversmart
+          setSubmit(true);
         }
       })
       .catch((err) => {
@@ -48,10 +50,9 @@ function App() {
       });
   }, [location.search]);
 
-  if(loading)
-    {
-      return <p>Loading ....</p>
-    }
+  if (loading) {
+    return <p>Loading ....</p>;
+  }
 
   return (
     <>{submit ? <ExpireLink /> : <Feedback name={name} number={number} />}</>
