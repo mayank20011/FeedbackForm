@@ -25,7 +25,7 @@ function App() {
     const number = params.get("phone");
     setName(name || "");
     setPhone(number || "");
-    const baseURL = `http://localhost:5000/feedback/?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(number)}`;
+    const baseURL = `https://feedback-form-backend-api.vercel.app/feedback/?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(number)}`;
 
     axios
       .get(baseURL)

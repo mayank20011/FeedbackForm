@@ -40,7 +40,7 @@ function Feedback({ name, number }) {
     handleSubmit(e);
   }
   //  Url to send patch request
-  const baseURL = `http://localhost:5000/feedback/?name=${encodeURIComponent(
+  const baseURL = `https://feedback-form-backend-api.vercel.app/feedback/?name=${encodeURIComponent(
     name
   )}&phone=${encodeURIComponent(number)}`;
 
